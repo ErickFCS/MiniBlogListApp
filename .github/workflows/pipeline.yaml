@@ -107,13 +107,13 @@ jobs:
           colour: "#F02E23"
 
   tag_release:
-    if: ${{ github.event_name == 'push' && contains(github.event.commits[0].message , '#tag' ) }}
     needs:
       - deployment_pipeline
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: Bump version and push tag
+        if: ${{ github.event_name == 'push' && contains(github.event.commits[0].message , '#tag' ) }}
         uses: anothrNick/github-tag-action@1.71.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
