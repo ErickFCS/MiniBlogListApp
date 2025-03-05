@@ -1,5 +1,5 @@
-import { Router } from "express"
-import User from "../models/user.js"
+import { Router } from 'express'
+import User from '../models/user.js'
 import bcrypt from 'bcrypt'
 import config from '../utils/config.js'
 import jwt from 'jsonwebtoken'
@@ -11,7 +11,7 @@ LoginRouter.post('/', async (request, response) => {
     const user = await User.findOne({ username })
     const passwordIsCorrect = user ? await bcrypt.compare(password, user.passwordHash) : false
     if (!passwordIsCorrect)
-        return response.status(401).json({ error: "password of username incorrect" })
+        return response.status(401).json({ error: 'password of username incorrect' })
     const token = jwt.sign({ username: user.username, id: user.id }, config.JWT_SECRET)
     response
         .status(200)

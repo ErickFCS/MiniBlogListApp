@@ -8,23 +8,23 @@ import stylisticJs from '@stylistic/eslint-plugin-js'
 export default [
     reactRefresh.configs.recommended,
     reactRefresh.configs.vite,
-    { ignores: ['dist', '**/*.test.jsx', 'node_modules', '.vite'] },
+    { ignores: ['dist', '**/*.test.jsx', 'node_modules', '.vite',], },
     {
-        files: ['**/*.{js,jsx}'],
+        files: ['**/*.{js,jsx}',],
         languageOptions: {
             ecmaVersion: 2020,
             globals: globals.browser,
             parserOptions: {
                 ecmaVersion: 'latest',
-                ecmaFeatures: { jsx: true },
-                sourceType: 'module'
-            }
+                ecmaFeatures: { jsx: true, },
+                sourceType: 'module',
+            },
         },
-        settings: { react: { version: '18.3' } },
+        settings: { react: { version: '18.3', }, },
         plugins: {
             react,
             'react-hooks': reactHooks,
-            '@stylistic/js': stylisticJs
+            '@stylistic/js': stylisticJs,
         },
         rules: {
             ...js.configs.recommended.rules,
@@ -32,17 +32,17 @@ export default [
             ...react.configs['jsx-runtime'].rules,
             ...reactHooks.configs.recommended.rules,
             'react/prop-types': 'off',
-            '@stylistic/js/indent': ['error', 4],
-            '@stylistic/js/semi': ['error', 'never'],
-            '@stylistic/js/comma-dangle': ['error', 'always'],
-            '@stylistic/js/comma-spacing': ['error', { 'after': true }],
-            '@stylistic/js/jsx-quotes': ['error', 'prefer-single'],
+            '@stylistic/js/indent': ['error', 4,],
+            '@stylistic/js/semi': ['error', 'never',],
+            '@stylistic/js/comma-dangle': ['error', 'always',],
+            '@stylistic/js/comma-spacing': ['error', { 'after': true, },],
+            '@stylistic/js/jsx-quotes': ['error', 'prefer-single',],
             '@stylistic/js/quotes': ['error', 'single', {
-                'allowTemplateLiterals': 'always'
-            }],
-            'eqeqeq': ['error', 'always'],
-            '@stylistic/js/object-curly-spacing': ['error', 'always'],
-            '@stylistic/js/arrow-spacing': ['error', { 'before': true, 'after': true }]
-        }
-    }
+                'allowTemplateLiterals': 'always',
+            },],
+            'eqeqeq': ['error', 'always',],
+            '@stylistic/js/object-curly-spacing': ['error', 'always',],
+            '@stylistic/js/arrow-spacing': ['error', { 'before': true, 'after': true, },],
+        },
+    },
 ]

@@ -4,5 +4,3 @@
 /playwright/.cache/
 /test-results/
 node_modules/
-package-lock.json
-pnpm-lock-yaml

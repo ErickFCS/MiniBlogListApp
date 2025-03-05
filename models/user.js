@@ -3,27 +3,27 @@ import mongoose from 'mongoose'
 const userSchema = mongoose.Schema({
     username: {
         type: String,
-        required: [true, "username must be given"],
+        required: [true, 'username must be given'],
         unique: true,
         validate: {
             validator: (v) => (
                 /^.{3,}$/.test(v)
             ),
-            message: "username must be at least 3 characters long"
+            message: 'username must be at least 3 characters long'
         }
     },
     passwordHash: {
         type: String,
-        required: [true, "there must be a password"]
+        required: [true, 'there must be a password']
     },
     name: {
         type: String,
-        required: [true, "you must have a name"]
+        required: [true, 'you must have a name']
     },
     Blog: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Blog"
+            ref: 'Blog'
         }
     ]
 })
@@ -44,6 +44,6 @@ userSchema.set('toObject', {
     }
 })
 
-const User = mongoose.model("User", userSchema)
+const User = mongoose.model('User', userSchema)
 
 export default User

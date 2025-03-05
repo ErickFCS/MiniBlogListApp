@@ -1,7 +1,7 @@
-import { clearUser, setUser } from '../reducers/user'
-import { newNotification } from '../reducers/notifications'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { clearUser, setUser, } from '../reducers/user'
+import { newNotification, } from '../reducers/notifications'
+import { useDispatch, useSelector, } from 'react-redux'
+import { useNavigate, } from 'react-router-dom'
 import AccountService from '../services/accountService'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
@@ -15,29 +15,29 @@ import useInput from '../hooks/useInput'
 const AccountForm = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const password = useInput('password')
-    const user = useSelector((state) => state.user)
-    const username = useInput('text')
+    const password = useInput('password',)
+    const user = useSelector((state,) => state.user,)
+    const username = useInput('text',)
 
-    const loginHandler = (event) => {
+    const loginHandler = (event,) => {
         event.preventDefault()
-        AccountService.login(username.values.value, password.values.value)
-            .then((newUser) => {
-                dispatch(setUser(newUser))
-                window.localStorage.setItem('user', JSON.stringify(newUser))
-                dispatch(newNotification('login successful', 5))
+        AccountService.login(username.values.value, password.values.value,)
+            .then((newUser,) => {
+                dispatch(setUser(newUser,),)
+                window.localStorage.setItem('user', JSON.stringify(newUser,),)
+                dispatch(newNotification('login successful', 5,),)
                 username.methods.reset()
                 password.methods.reset()
-            })
-            .catch((err) => {
-                dispatch(newNotification('login unsuccessful', 5, true))
-            })
+            },)
+            .catch(() => {
+                dispatch(newNotification('login unsuccessful', 5, true,),)
+            },)
     }
 
     const logoutHandler = () => {
-        dispatch(clearUser())
-        window.localStorage.removeItem('user')
-        dispatch(newNotification('logout successful', 5))
+        dispatch(clearUser(),)
+        window.localStorage.removeItem('user',)
+        dispatch(newNotification('logout successful', 5,),)
     }
 
     if (!user.name)
@@ -53,13 +53,13 @@ const AccountForm = () => {
                                 <Form.Group>
                                     <InputGroup>
                                         <InputGroup.Text>Username:</InputGroup.Text>
-                                        <Form.Control {...username.values} placeholder='username' />
+                                        <Form.Control {...username.values} placeholder='username' name='username' />
                                     </InputGroup>
                                 </Form.Group>
                                 <Form.Group>
                                     <InputGroup>
                                         <InputGroup.Text>Password:</InputGroup.Text>
-                                        <Form.Control {...password.values} placeholder='password' />
+                                        <Form.Control {...password.values} placeholder='password' name='password' />
                                     </InputGroup>
                                 </Form.Group>
                                 <Button variant='success' type='submit'>login</Button>
@@ -73,14 +73,14 @@ const AccountForm = () => {
         return (
             <Navbar>
                 <Navbar.Brand>Mini Blog List App</Navbar.Brand>
-                <Nav variant="underline" onSelect={(eventKey) => { navigate(eventKey) }} defaultActiveKey='/'>
+                <Nav variant='underline' onSelect={(eventKey,) => { navigate(eventKey,) }} defaultActiveKey='/'>
                     <Nav.Item>
-                        <Nav.Link eventKey="/" as='div'>
+                        <Nav.Link eventKey='/' as='div'>
                             Blogs
                         </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link eventKey="/users" as='div'>
+                        <Nav.Link eventKey='/users' as='div'>
                             Users
                         </Nav.Link>
                     </Nav.Item>

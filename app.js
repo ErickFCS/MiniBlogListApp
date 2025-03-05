@@ -14,22 +14,26 @@ const app = express()
 mongoose
     .connect(config.URI)
     .then(() => {
-        logger.info("connection to mongodb successed")
+        logger.info('connection to mongodb succeed')
     })
     .catch((error) => {
-        logger.error("connection to mongodb failed", error)
+        logger.error('connection to mongodb failed', error)
     })
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 app.use(cors())
-app.use(express.static('dist'));
+app.use(express.static('dist'))
 app.use(express.json())
 app.use(requestLogger)
 app.use(getToken)
 
-app.use("/api/users", UsersRouter)
-app.use("/api/login", LoginRouter)
-app.use("/api/blogs", getUser, BlogsRouter)
+app.use('/api/users', UsersRouter)
+app.use('/api/login', LoginRouter)
+app.use('/api/blogs', getUser, BlogsRouter)
+
+app.get('/health', (req, res) => {
+    res.send('ok')
+})
 
 if (process.env.NODE_ENV === 'test') {
     app.use('/api/tests', TestRouter)

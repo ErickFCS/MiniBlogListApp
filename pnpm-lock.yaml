@@ -31,14 +31,14 @@ importers:
         version: 9.0.2
       mongoose:
         specifier: ^8.11.0
-        version: 8.11.0
+        version: 8.12.1
     devDependencies:
       '@eslint/js':
         specifier: ^9.21.0
         version: 9.21.0
       '@stylistic/eslint-plugin-js':
         specifier: ^4.1.0
-        version: 4.1.0(eslint@9.21.0)
+        version: 4.2.0(eslint@9.21.0)
       eslint:
         specifier: ^9.21.0
         version: 9.21.0
@@ -115,8 +115,8 @@ packages:
   '@mongodb-js/saslprep@1.2.0':
     resolution: {integrity: sha512-+ywrb0AqkfaYuhHs6LxKWgqbh3I72EpEgESCw37o+9qPx9WTCkgDm2B+eMrwehGtHBWHFU4GXvnSCNiFhhausg==}
 
-  '@stylistic/eslint-plugin-js@4.1.0':
-    resolution: {integrity: sha512-YOe+dChNoR26JVVt+7BjyebsPIQF05OLNmHCXivq8lLZ4ZeVs4+wXaW+pREVboDiAaSRznauAdAU8f+iQouw6Q==}
+  '@stylistic/eslint-plugin-js@4.2.0':
+    resolution: {integrity: sha512-MiJr6wvyzMYl/wElmj8Jns8zH7Q1w8XoVtm+WM6yDaTrfxryMyb8n0CMxt82fo42RoLIfxAEtM6tmQVxqhk0/A==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=9.0.0'
@@ -145,8 +145,8 @@ packages:
     peerDependencies:
       acorn: ^6.0.0 || ^7.0.0 || ^8.0.0
 
-  acorn@8.14.0:
-    resolution: {integrity: sha512-cl669nCJTZBsL97OF4kUQm5g5hC2uihk0NxY3WENAC0TYdILVkAyHymAntgxGkl7K+t0cXIrH5siy5S4XkFycA==}
+  acorn@8.14.1:
+    resolution: {integrity: sha512-OvQ/2pUDKmgfCg++xsTX1wGxfTaszcHVcTctW4UJB4hibJx2HXxxO5UmVgyjMa+ZDsiaf5wWLXYpRWMmBI0QHg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -226,8 +226,8 @@ packages:
     resolution: {integrity: sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==}
     engines: {node: '>= 0.4'}
 
-  call-bound@1.0.3:
-    resolution: {integrity: sha512-YTd+6wGlNlPxSuri7Y6X8tY2dmm12UMH66RpKMhiX6rsk5wXXnYgbUcOt8kiS31/AjfoTOvCsE+w8nZQLQnzHA==}
+  call-bound@1.0.4:
+    resolution: {integrity: sha512-+ys997U96po4Kx/ABpBCqhA9EuxJaQWDQg7295H4hBphv3IZg0boBKuwYpt4YXp6MZ5AmZQnU/tyMTlRpaSejg==}
     engines: {node: '>= 0.4'}
 
   callsites@3.1.0:
@@ -761,11 +761,11 @@ packages:
   mongodb-connection-string-url@3.0.2:
     resolution: {integrity: sha512-rMO7CGo/9BFwyZABcKAWL8UJwH/Kc2x0g72uhDWzG48URRax5TCIcJ7Rc3RZqffZzO/Gwff/jyKwCU9TN8gehA==}
 
-  mongodb@6.13.1:
-    resolution: {integrity: sha512-gdq40tX8StmhP6akMp1pPoEVv+9jTYFSrga/g23JxajPAQhH39ysZrHGzQCSd9PEOnuEQEdjIWqxO7ZSwC0w7Q==}
+  mongodb@6.14.2:
+    resolution: {integrity: sha512-kMEHNo0F3P6QKDq17zcDuPeaywK/YaJVCEQRzPF3TOM/Bl9MFg64YE5Tu7ifj37qZJMhwU1tl2Ioivws5gRG5Q==}
     engines: {node: '>=16.20.1'}
     peerDependencies:
-      '@aws-sdk/credential-providers': ^3.632.0
+      '@aws-sdk/credential-providers': ^3.188.0
       '@mongodb-js/zstd': ^1.1.0 || ^2.0.0
       gcp-metadata: ^5.2.0
       kerberos: ^2.0.1
@@ -788,8 +788,8 @@ packages:
       socks:
         optional: true
 
-  mongoose@8.11.0:
-    resolution: {integrity: sha512-xaQSuaLk2JKmXI5zDVVWXVCQTnWhAe8MFOijMnwOuP/wucKVphd3f+ouDKivCDMGjYBDrR7dtoyV0U093xbKqA==}
+  mongoose@8.12.1:
+    resolution: {integrity: sha512-UW22y8QFVYmrb36hm8cGncfn4ARc/XsYWQwRTaj0gxtQk1rDuhzDO1eBantS+hTTatfAIS96LlRCJrcNHvW5+Q==}
     engines: {node: '>=16.20.1'}
 
   mpath@0.9.0:
@@ -1210,7 +1210,7 @@ snapshots:
     dependencies:
       sparse-bitfield: 3.0.3
 
-  '@stylistic/eslint-plugin-js@4.1.0(eslint@9.21.0)':
+  '@stylistic/eslint-plugin-js@4.2.0(eslint@9.21.0)':
     dependencies:
       eslint: 9.21.0
       eslint-visitor-keys: 4.2.0
@@ -1233,11 +1233,11 @@ snapshots:
       mime-types: 2.1.35
       negotiator: 0.6.3
 
-  acorn-jsx@5.3.2(acorn@8.14.0):
+  acorn-jsx@5.3.2(acorn@8.14.1):
     dependencies:
-      acorn: 8.14.0
+      acorn: 8.14.1
 
-  acorn@8.14.0: {}
+  acorn@8.14.1: {}
 
   agent-base@6.0.2:
     dependencies:
@@ -1327,7 +1327,7 @@ snapshots:
       es-errors: 1.3.0
       function-bind: 1.1.2
 
-  call-bound@1.0.3:
+  call-bound@1.0.4:
     dependencies:
       call-bind-apply-helpers: 1.0.2
       get-intrinsic: 1.3.0
@@ -1514,8 +1514,8 @@ snapshots:
 
   espree@10.3.0:
     dependencies:
-      acorn: 8.14.0
-      acorn-jsx: 5.3.2(acorn@8.14.0)
+      acorn: 8.14.1
+      acorn-jsx: 5.3.2(acorn@8.14.1)
       eslint-visitor-keys: 4.2.0
 
   esquery@1.6.0:
@@ -1877,17 +1877,17 @@ snapshots:
       '@types/whatwg-url': 11.0.5
       whatwg-url: 14.1.1
 
-  mongodb@6.13.1:
+  mongodb@6.14.2:
     dependencies:
       '@mongodb-js/saslprep': 1.2.0
       bson: 6.10.3
       mongodb-connection-string-url: 3.0.2
 
-  mongoose@8.11.0:
+  mongoose@8.12.1:
     dependencies:
       bson: 6.10.3
       kareem: 2.6.3
-      mongodb: 6.13.1
+      mongodb: 6.14.2
       mpath: 0.9.0
       mquery: 5.0.0
       ms: 2.1.3
@@ -2091,14 +2091,14 @@ snapshots:
 
   side-channel-map@1.0.1:
     dependencies:
-      call-bound: 1.0.3
+      call-bound: 1.0.4
       es-errors: 1.3.0
       get-intrinsic: 1.3.0
       object-inspect: 1.13.4
 
   side-channel-weakmap@1.0.2:
     dependencies:
-      call-bound: 1.0.3
+      call-bound: 1.0.4
       es-errors: 1.3.0
       get-intrinsic: 1.3.0
       object-inspect: 1.13.4

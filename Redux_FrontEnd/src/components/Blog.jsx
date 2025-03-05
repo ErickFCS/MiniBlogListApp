@@ -1,7 +1,7 @@
-import { addComment, giveLike, removeBlog } from '../reducers/blogs'
-import { newNotification } from '../reducers/notifications'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { addComment, giveLike, removeBlog, } from '../reducers/blogs'
+import { newNotification, } from '../reducers/notifications'
+import { useDispatch, useSelector, } from 'react-redux'
+import { useNavigate, } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/esm/InputGroup'
@@ -9,47 +9,48 @@ import Stack from 'react-bootstrap/esm/Stack'
 import Table from 'react-bootstrap/Table'
 import useInput from '../hooks/useInput'
 
-const Blog = ({ blog }) => {
-    if (!blog) return null
+const Blog = ({ blog, },) => {
     const dispatch = useDispatch()
-    const user = useSelector((state) => state.user)
+    const user = useSelector((state,) => state.user,)
     const navigate = useNavigate()
-    const comment = useInput('text')
+    const comment = useInput('text',)
 
     const likesHandler = () => {
-        dispatch(giveLike(blog, user))
-            .then((res) => {
-                dispatch(newNotification('Liked', 5))
-            })
-            .catch((err) => {
-                dispatch(newNotification('Unable to like', 5, true))
-            })
+        dispatch(giveLike(blog, user,),)
+            .then(() => {
+                dispatch(newNotification('Liked', 5,),)
+            },)
+            .catch(() => {
+                dispatch(newNotification('Unable to like', 5, true,),)
+            },)
     }
     const removeHandler = () => {
-        if (!window.confirm(`Are you sure yo want to remove ${blog.title}?`)) return
-        dispatch(removeBlog(blog, user))
-            .then((res) => {
-                dispatch(newNotification(`${blog.title} removed`, 5))
-            })
-            .catch((err) => {
-                dispatch(newNotification(`unable to remove ${blog.title}`, 5, true))
-            })
-        navigate('/')
+        if (!window.confirm(`Are you sure yo want to remove ${blog.title}?`,)) return
+        dispatch(removeBlog(blog, user,),)
+            .then(() => {
+                dispatch(newNotification(`${blog.title} removed`, 5,),)
+            },)
+            .catch(() => {
+                dispatch(newNotification(`unable to remove ${blog.title}`, 5, true,),)
+            },)
+        navigate('/',)
     }
-    const commentHandler = (event) => {
+    const commentHandler = (event,) => {
         event.preventDefault()
-        dispatch(addComment(blog, user, comment.values.value))
+        dispatch(addComment(blog, user, comment.values.value,),)
         comment.methods.reset()
     }
+
+    if (!blog) return null
     return (
         <>
             <Stack direction='horizontal'>
-                <h2 style={{ margin: 0, flexGrow: 1 }}>{blog.title}</h2>
-                {user.id === blog.User.id &&
+                <h2 style={{ margin: 0, flexGrow: 1, }}>{blog.title}</h2>
+                {user.id === blog.User?.id &&
                     <Button variant='danger' onClick={() => { removeHandler(blog,) }}>Delete</Button>
                 }
             </Stack>
-            <Table style={{ margin: 0, height: '100%' }}>
+            <Table style={{ margin: 0, height: '100%', }}>
                 <thead>
                     <tr>
                         <th></th>
@@ -67,7 +68,7 @@ const Blog = ({ blog }) => {
                     </tr>
                     <tr>
                         <td>
-                            <Stack direction='horizontal' style={{ alignItems: 'center', height: "100%" }}>
+                            <Stack direction='horizontal' style={{ alignItems: 'center', height: '100%', }}>
                                 Total likes:
                             </Stack>
                         </td>
@@ -90,9 +91,9 @@ const Blog = ({ blog }) => {
                 </Form.Group>
             </Form>
             <ul>
-                {blog.comments?.map((e, i) => (
+                {blog.comments?.map((e, i,) => (
                     <li key={i}>{e}</li>
-                ))}
+                ),)}
             </ul>
         </>
     )

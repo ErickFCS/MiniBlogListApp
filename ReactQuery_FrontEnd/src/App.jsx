@@ -56,7 +56,7 @@ const App = () => {
             }, 5000)
             notificationDispatch(
                 setNotification({
-                    message: 'blog creating successed',
+                    message: 'blog creating succeed',
                     lastTimeOut: timeOut,
                 })
             )

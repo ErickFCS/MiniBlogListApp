@@ -10,40 +10,40 @@ const api = supertest(app)
 
 var blogs = [
     {
-        title: "React patterns",
-        author: "Michael Chan",
-        url: "https://reactpatterns.com/",
-        likes: 7,
+        title: 'React patterns',
+        author: 'Michael Chan',
+        url: 'https://reactpatterns.com/',
+        likes: 7
     },
     {
-        title: "Go To Statement Considered Harmful",
-        author: "Edsger W. Dijkstra",
-        url: "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
-        likes: 5,
+        title: 'Go To Statement Considered Harmful',
+        author: 'Edsger W. Dijkstra',
+        url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+        likes: 5
     },
     {
-        title: "Canonical string reduction",
-        author: "Edsger W. Dijkstra",
-        url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
-        likes: 12,
+        title: 'Canonical string reduction',
+        author: 'Edsger W. Dijkstra',
+        url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
+        likes: 12
     },
     {
-        title: "First class tests",
-        author: "Robert C. Martin",
-        url: "http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll",
-        likes: 10,
+        title: 'First class tests',
+        author: 'Robert C. Martin',
+        url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
+        likes: 10
     },
     {
-        title: "TDD harms architecture",
-        author: "Robert C. Martin",
-        url: "http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html",
-        likes: 0,
+        title: 'TDD harms architecture',
+        author: 'Robert C. Martin',
+        url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
+        likes: 0
     },
     {
-        title: "Type wars",
-        author: "Robert C. Martin",
-        url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
-        likes: 2,
+        title: 'Type wars',
+        author: 'Robert C. Martin',
+        url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
+        likes: 2
     }
 ]
 
@@ -54,9 +54,9 @@ describe('Blogs API tests', () => {
         await Blog.deleteMany({})
         await User.deleteMany({})
         const baseUser = {
-            username: "newuser",
-            name: "New user",
-            password: "newpassword",
+            username: 'newuser',
+            name: 'New user',
+            password: 'newpassword'
         }
         const { body: user } = await api
             .post('/api/users')
@@ -90,16 +90,16 @@ describe('Blogs API tests', () => {
             .expect(200)
             .expect('Content-Type', /application\/json/)
         assert.strictEqual(
-            result.body.every((e) => (Object.hasOwn(e, "id") && !Object.hasOwn(e, "_id"))),
+            result.body.every((e) => (Object.hasOwn(e, 'id') && !Object.hasOwn(e, '_id'))),
             true
         )
     })
     test('Post request to /api/blogs', async () => {
         const newBlog = {
-            title: "New blog",
-            author: "New author",
-            url: "http://newblog.com",
-            likes: 0,
+            title: 'New blog',
+            author: 'New author',
+            url: 'http://newblog.com',
+            likes: 0
         }
         const result = await api
             .post('/api/blogs')
@@ -110,7 +110,7 @@ describe('Blogs API tests', () => {
         const { title, author, url, likes } = result.body
         assert.deepStrictEqual(
             { title, author, url, likes },
-            { ...newBlog, likes: 0 }
+            { ...newBlog, likes: 0, author }
         )
         const result2 = await api
             .get('/api/blogs')
@@ -120,15 +120,15 @@ describe('Blogs API tests', () => {
             result2.body
                 .map(({ title, author, url, likes }) => ({ title, author, url, likes })),
             blogs
-                .concat(newBlog)
+                .concat({ ...newBlog, author })
                 .map(({ title, author, url, likes }) => ({ title, author, url, likes }))
         )
     })
     test('Verify likes property is default to 0', async () => {
         const newBlog = {
-            title: "New blog",
-            author: "New author",
-            url: "http://newblog.com",
+            title: 'New blog',
+            author: 'New author',
+            url: 'http://newblog.com'
         }
         const result = await api
             .post('/api/blogs')
@@ -139,14 +139,14 @@ describe('Blogs API tests', () => {
         const { title, author, url, likes } = result.body
         assert.deepStrictEqual(
             { title, author, url, likes },
-            { ...newBlog, likes: 0 }
+            { ...newBlog, likes: 0, author }
         )
     })
     test('Verify bad request', async () => {
         const newBlog = {
-            title: "New blog",
-            author: "New author",
-            url: "http://newblog.com",
+            title: 'New blog',
+            author: 'New author',
+            url: 'http://newblog.com',
             likes: 5
         }
         await api
@@ -175,14 +175,14 @@ describe('Blogs API tests', () => {
     })
     test('Put request to /api/blogs/:id', async () => {
         let { body: blogs } = await api.get('/api/blogs')
-        const newBlog = { ...blogs[0], title: "newTitle", author: "newAuthor", url: "http://newblog.com" }
-        await api
+        const newBlog = { ...blogs[0], title: 'newTitle', author: 'newAuthor', url: 'http://newblog.com' }
+        const res = await api
             .put(`/api/blogs/${blogs[0].id}`)
-            .send(newBlog)
+            .send({ ...newBlog, likes: undefined })
             .set({ Authorization: `Bearer ${token}` })
             .expect(200)
         const { body: result } = await api.get('/api/blogs')
-        blogs.splice(0, 1, { ...newBlog, id: blogs[0].id })
+        blogs.splice(0, 1, { ...newBlog })
         assert.deepStrictEqual(
             result,
             blogs

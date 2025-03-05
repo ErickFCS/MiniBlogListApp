@@ -1,12 +1,12 @@
-import { useState } from 'react'
+import { useState, } from 'react'
 
-export default (type) => {
-    const [value, setValue] = useState('')
-    const onChange = (event) => {
-        setValue(event.target.value)
+export default (type,) => {
+    const [value, setValue,] = useState('',)
+    const onChange = (event,) => {
+        setValue(event.target.value,)
     }
     const reset = () => {
-        setValue('')
+        setValue('',)
     }
-    return { values: { type, value, onChange }, methods: { reset } }
+    return { values: { type, value, onChange, }, methods: { reset, }, }
 }

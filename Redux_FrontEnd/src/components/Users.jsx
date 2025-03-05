@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom'
+import { Link, } from 'react-router-dom'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 
-const Users = ({ users }) => {
+const Users = ({ users, },) => {
     return (
         <>
             <h2>Users</h2>
@@ -15,8 +15,8 @@ const Users = ({ users }) => {
                         <Col>Blogs created</Col>
                     </Row>
                 </ListGroup.Item>
-                {users.map((e, i) => (
-                    <ListGroup.Item>
+                {users.map((e, i,) => (
+                    <ListGroup.Item key={`Item${i}`}>
                         <Row>
                             <Col>
                                 <Link to={e.id}>{e.username}</Link>
@@ -26,7 +26,7 @@ const Users = ({ users }) => {
                             </Col>
                         </Row>
                     </ListGroup.Item>
-                ))}
+                ),)}
             </ListGroup>
         </>
     )

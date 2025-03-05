@@ -13,7 +13,7 @@ const requestLogger = (request, response, next) => {
 
 const getToken = (request, response, next) => {
     const authorization = request.get('Authorization')
-    request.token = (authorization && authorization.startsWith('Bearer ')) ? authorization.replace('Bearer ', '') : ""
+    request.token = (authorization && authorization.startsWith('Bearer ')) ? authorization.replace('Bearer ', '') : ''
     request.decodedToken = request.token ? jwt.verify(request.token, config.JWT_SECRET) : {}
     next()
 }
@@ -29,7 +29,7 @@ const unknownEndpoint = (request, response) => {
 
 const errorHandler = (error, request, response, next) => {
     if (error.name === 'CastError') {
-        return response.status(400).send({ error: 'malformatted id' })
+        return response.status(400).send({ error: 'malformed id' })
     }
     else if (error.name === 'ValidationError') {
         return response.status(400).json({ error: error.message })
@@ -43,6 +43,7 @@ const errorHandler = (error, request, response, next) => {
     // else {
     //     return response.status(400).json({ error: error })
     // }
+    console.log(`\x1b[92m${error}\x1b[0m`)
     next(error)
 }
 

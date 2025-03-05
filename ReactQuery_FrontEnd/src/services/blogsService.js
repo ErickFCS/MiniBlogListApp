@@ -8,7 +8,7 @@ const getAll = async () => {
 const createBlog = async ({ blog, user }) => {
     return axios
         .post(baseUrl, blog, {
-            headers: { Authorization: `Bearer ${user.token}` },
+            headers: { Authorization: `Bearer ${user.token}` }
         })
         .then((response) => {
             return response.data
@@ -24,11 +24,11 @@ const giveLike = async ({ blog, user }) => {
         method: 'put',
         url: `${baseUrl}/${blog.id}`,
         headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${user.token}`
         },
         data: {
-            likes: 1,
-        },
+            likes: 1
+        }
     }
     return axios
         .request(config)
@@ -46,8 +46,8 @@ const deleteBlog = async ({ blog, user }) => {
         method: 'delete',
         url: `${baseUrl}/${blog.id}`,
         headers: {
-            Authorization: `Bearer ${user.token}`,
-        },
+            Authorization: `Bearer ${user.token}`
+        }
     }
     return axios
         .request(config)
@@ -65,11 +65,11 @@ const commentBlog = async ({ blog, user, comment }) => {
         method: 'post',
         url: `${baseUrl}/${blog.id}/comments`,
         headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${user.token}`
         },
         data: {
-            comment,
-        },
+            comment
+        }
     }
     return axios
         .request(config)

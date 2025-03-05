@@ -1,13 +1,13 @@
-import { useState } from 'react'
+import { useState, } from 'react'
 
 import Button from 'react-bootstrap/Button'
 
-const Toggle = ({ showButtonText, hideButtonText, children }) => {
-    const [isVisible, setIsVisible] = useState(false)
-    const visibleWhenVisible = { display: isVisible ? 'block' : 'none' }
-    const visibleWhenNoyVisible = { display: isVisible ? 'none' : 'block' }
+const Toggle = ({ showButtonText, hideButtonText, children, },) => {
+    const [isVisible, setIsVisible,] = useState(false,)
+    const visibleWhenVisible = { display: isVisible ? 'block' : 'none', }
+    const visibleWhenNoyVisible = { display: isVisible ? 'none' : 'block', }
     const toggleVisibility = () => {
-        setIsVisible(!isVisible)
+        setIsVisible(!isVisible,)
     }
     return (
         <>

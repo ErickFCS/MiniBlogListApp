@@ -5,20 +5,20 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import Stack from 'react-bootstrap/esm/Stack'
 import useInput from '../hooks/useInput'
 
-const CreateForm = ({ createHandler }) => {
-    const title = useInput('text')
-    const author = useInput('text')
-    const url = useInput('text')
+const CreateForm = ({ createHandler, },) => {
+    const title = useInput('text',)
+    const author = useInput('text',)
+    const url = useInput('text',)
 
-    const onSubmitHandler = (event) => {
+    const onSubmitHandler = (event,) => {
         event.preventDefault()
-        createHandler(title.values.value, author.values.value, url.values.value)
+        createHandler(title.values.value, author.values.value, url.values.value,)
             .then(() => {
                 title.methods.reset()
                 author.methods.reset()
                 url.methods.reset()
-            })
-            .catch((err) => { })
+            },)
+            .catch(() => { },)
     }
 
     return (
@@ -33,13 +33,13 @@ const CreateForm = ({ createHandler }) => {
                             <Form.Group>
                                 <InputGroup>
                                     <InputGroup.Text>title:</InputGroup.Text>
-                                    <Form.Control {...title.values} placeholder='author' />
+                                    <Form.Control {...title.values} placeholder='title' />
                                 </InputGroup>
                             </Form.Group>
                             <Form.Group>
                                 <InputGroup>
                                     <InputGroup.Text>author:</InputGroup.Text>
-                                    <Form.Control {...author.values} placeholder='title' />
+                                    <Form.Control {...author.values} placeholder='author' />
                                 </InputGroup>
                             </Form.Group>
                             <Form.Group>

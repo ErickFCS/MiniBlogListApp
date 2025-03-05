@@ -1,0 +1,57 @@
+name: health_check
+
+on:
+  schedule:
+    - cron: "17 13 * * *"
+
+jobs:
+  health_check:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check the deployed service URL
+        uses: jtalk/url-health-check-action@v4
+        with:
+          url: "${{ vars.DEPLOY_URL }}/health"
+      - name: Send success notification
+        if: ${{ success() }}
+        uses: stegzilla/discord-notify@v2
+        with:
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          title: Health check
+          message: |
+            "Health check passed"
+            **Event:** ${{ github.event_name }}
+            **Repo:** ${{ github.event.repository.full_name }}
+            **Ref:** ${{ github.event.ref }}
+            **Workflow:** ${{ github.workflow }}
+            **Author:** ${{ github.event.head_commit.author.name }}
+            **Committer:** ${{ github.event.head_commit.committer.name }}
+            **Pusher:** ${{ github.event.pusher.name }}
+            **Commit URL:** ${{ github.event.head_commit.url }}
+            **Commit Message:** ${{ github.event.head_commit.message }}
+          include_image: true
+          avatar_url: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/9c870380-219a-4060-914d-9929082d5056/dfghzab-31509847-d454-4602-ac9b-0b1ad48ba9b7.png/v1/fill/w_600,h_600,q_80,strp/build_chan_by_lupinmk_dfghzab-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjAwIiwicGF0aCI6IlwvZlwvOWM4NzAzODAtMjE5YS00MDYwLTkxNGQtOTkyOTA4MmQ1MDU2XC9kZmdoemFiLTMxNTA5ODQ3LWQ0NTQtNDYwMi1hYzliLTBiMWFkNDhiYTliNy5wbmciLCJ3aWR0aCI6Ijw9NjAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.PsmFPEaVbfDMhXGlNbGe7Jmku2lwgnw2blRzAxsKL-U"
+          username: BuildNotifier-chan
+          colour: "#32E638"
+      - name: Send failure notification
+        if: ${{ failure() }}
+        uses: stegzilla/discord-notify@v2
+        with:
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          title: Health check
+          message: |
+            "Health check failed"
+            **Event:** ${{ github.event_name }}
+            **Repo:** ${{ github.event.repository.full_name }}
+            **Ref:** ${{ github.event.ref }}
+            **Workflow:** ${{ github.workflow }}
+            **Author:** ${{ github.event.head_commit.author.name }}
+            **Committer:** ${{ github.event.head_commit.committer.name }}
+            **Pusher:** ${{ github.event.pusher.name }}
+            **Commit URL:** ${{ github.event.head_commit.url }}
+            **Commit Message:** ${{ github.event.head_commit.message }}
+          include_image: true
+          avatar_url: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/9c870380-219a-4060-914d-9929082d5056/dfghzab-31509847-d454-4602-ac9b-0b1ad48ba9b7.png/v1/fill/w_600,h_600,q_80,strp/build_chan_by_lupinmk_dfghzab-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjAwIiwicGF0aCI6IlwvZlwvOWM4NzAzODAtMjE5YS00MDYwLTkxNGQtOTkyOTA4MmQ1MDU2XC9kZmdoemFiLTMxNTA5ODQ3LWQ0NTQtNDYwMi1hYzliLTBiMWFkNDhiYTliNy5wbmciLCJ3aWR0aCI6Ijw9NjAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.PsmFPEaVbfDMhXGlNbGe7Jmku2lwgnw2blRzAxsKL-U"
+          username: BuildNotifier-chan
+          colour: "#F02E23"
+

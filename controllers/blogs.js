@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router } from 'express'
 import Blog from '../models/blog.js'
 
 const BlogsRouter = Router()
