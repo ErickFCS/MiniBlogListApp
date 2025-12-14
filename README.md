@@ -18,39 +18,20 @@ This project is a mini web application built with React, Vite, and Bootstrap. It
 
 ### Prerequisites
 
-- Node.js installed on your local machine.
+- Node.js
+- Pnpm or npm
+- A mongodb server instance running somewhere accessible
 
-### Installation
+### Fast Setup
 
-1. Clone the repository:
+- En Unix based
+    ```bash
+    ./run.sh
 
-   ```bash
-   git clone <repository-url>
-   cd <repository-name>
-2. Start backend server
-- With NPM
+- En windows
 
-   ```bash
-   npm install
-   npm run dev
-- With PNPM
-
-   ```bash
-   pnpm install
-   pnpm dev
-3. Start development vite server (in other terminal)
-- With NPM
-
-   ```bash
-   cd FrontEnd
-   npm install
-   npm run dev
-- With PNPM
-
-   ```bash
-   cd FrontEnd
-   pnpm install
-   pnpm dev
+    ```bash
+    run.bat
 
 ### Build
 
@@ -63,12 +44,23 @@ This project is a mini web application built with React, Vite, and Bootstrap. It
 - With NPM
 
    ```bash
-   cd FrontEnd
+   cd <Prefered FrontEnd>
    npm install
    npm run build
 - With PNPM
 
    ```bash
-   cd FrontEnd
+   cd <Prefered FrontEnd>
    pnpm install
    pnpm build
+3. Run the BackEnd
+- With NPM
+
+   ```bash
+   cd <Project Root>
+   npm run dev
+- With PNPM
+
+   ```bash
+   cd <Project Root>
+   pnpm run dev

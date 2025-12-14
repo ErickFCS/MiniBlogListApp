@@ -5,22 +5,22 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import Stack from 'react-bootstrap/esm/Stack'
 import useInput from '../hooks/useInput'
 
-const CreateForm = ({ createHandler }) => {
-    const author = useInput('text')
-    const title = useInput('text')
-    const url = useInput('text')
+const CreateForm = ({ createHandler, },) => {
+    const author = useInput('text',)
+    const title = useInput('text',)
+    const url = useInput('text',)
 
-    const onSubmitHandler = (event) => {
+    const onSubmitHandler = (event,) => {
         event.preventDefault()
-        createHandler(author.values.value, title.values.value, url.values.value)
+        createHandler(author.values.value, title.values.value, url.values.value,)
             .then(() => {
                 author.methods.reset()
                 title.methods.reset()
                 url.methods.reset()
-            })
-            .catch((err) => {
-                console.error(err)
-            })
+            },)
+            .catch((err,) => {
+                console.error(err,)
+            },)
     }
 
     return (

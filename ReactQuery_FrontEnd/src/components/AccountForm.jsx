@@ -1,7 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { setNotification, clearNotification } from '../context/notifications'
-import { setUser, clearUser } from '../context/user'
-import { useContext } from 'react'
+import { useNavigate, } from 'react-router-dom'
+import { setNotification, clearNotification, } from '../context/notifications'
+import { setUser, clearUser, } from '../context/user'
+import { useContext, } from 'react'
 import AccountService from '../services/accountService'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
@@ -16,57 +16,57 @@ import userContext from '../context/user'
 
 
 const AccountForm = () => {
-    const [notification, notificationDispatch] = useContext(notificationContext)
-    const [user, userDispatch] = useContext(userContext)
+    const [notification, notificationDispatch,] = useContext(notificationContext,)
+    const [user, userDispatch,] = useContext(userContext,)
     const navigate = useNavigate()
-    const password = useInput('password')
-    const username = useInput('text')
+    const password = useInput('password',)
+    const username = useInput('text',)
 
-    const loginHandler = (event) => {
+    const loginHandler = (event,) => {
         event.preventDefault()
-        AccountService.login(username.values.value, password.values.value)
-            .then((newUser) => {
-                userDispatch(setUser(newUser))
-                window.localStorage.setItem('user', JSON.stringify(newUser))
-                if (notification.lastTimeOut) clearTimeout(notification.lastTimeOut)
+        AccountService.login(username.values.value, password.values.value,)
+            .then((newUser,) => {
+                userDispatch(setUser(newUser,),)
+                window.localStorage.setItem('user', JSON.stringify(newUser,),)
+                if (notification.lastTimeOut) clearTimeout(notification.lastTimeOut,)
                 const timeOut = setTimeout(() => {
-                    notificationDispatch(clearNotification())
-                }, 5000)
+                    notificationDispatch(clearNotification(),)
+                }, 5000,)
                 notificationDispatch(
                     setNotification({
                         message: 'login successful',
                         lastTimeOut: timeOut,
-                    })
+                    },),
                 )
                 username.methods.reset()
                 password.methods.reset()
-            })
-            .catch((err) => {
-                if (notification.lastTimeOut) clearTimeout(notification.lastTimeOut)
+            },)
+            .catch((_err,) => {
+                if (notification.lastTimeOut) clearTimeout(notification.lastTimeOut,)
                 const timeOut = setTimeout(() => {
-                    notificationDispatch(clearNotification())
-                }, 5000)
+                    notificationDispatch(clearNotification(),)
+                }, 5000,)
                 notificationDispatch(
                     setNotification({
                         error: 'login unsuccessful',
                         lastTimeOut: timeOut,
-                    })
+                    },),
                 )
-            })
+            },)
     }
 
     const logoutHandler = () => {
-        userDispatch(clearUser())
-        window.localStorage.removeItem('user')
-        if (notification.lastTimeOut) clearTimeout(notification.lastTimeOut)
+        userDispatch(clearUser(),)
+        window.localStorage.removeItem('user',)
+        if (notification.lastTimeOut) clearTimeout(notification.lastTimeOut,)
         const timeOut = setTimeout(() => {
-            notificationDispatch(clearNotification())
-        }, 5000)
+            notificationDispatch(clearNotification(),)
+        }, 5000,)
         notificationDispatch(
             setNotification({
                 message: 'logout successful',
                 lastTimeOut: timeOut,
-            })
+            },),
         )
     }
 
@@ -103,14 +103,14 @@ const AccountForm = () => {
         return (
             <Navbar>
                 <Navbar.Brand>Mini Blog List App</Navbar.Brand>
-                <Nav variant="underline" onSelect={(eventKey) => { navigate(eventKey) }} defaultActiveKey='/'>
+                <Nav variant='underline' onSelect={(eventKey,) => { navigate(eventKey,) }} defaultActiveKey='/'>
                     <Nav.Item>
-                        <Nav.Link eventKey="/" as='div'>
+                        <Nav.Link eventKey='/' as='div'>
                             Blogs
                         </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link eventKey="/users" as='div'>
+                        <Nav.Link eventKey='/users' as='div'>
                             Users
                         </Nav.Link>
                     </Nav.Item>
