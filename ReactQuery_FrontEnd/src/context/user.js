@@ -1,6 +1,6 @@
-import { createContext, useReducer } from 'react'
+import { createContext, useReducer, } from 'react'
 
-const userReducer = (state, action) => {
+const userReducer = (state, action,) => {
     switch (action.type) {
         case 'SET':
             return action.payload
@@ -11,7 +11,7 @@ const userReducer = (state, action) => {
     }
 }
 
-export const setUser = (user) => ({
+export const setUser = (user,) => ({
     type: 'SET',
     payload: user,
 })
@@ -23,10 +23,10 @@ export const clearUser = () => ({
 
 const userContext = createContext()
 
-export const UserContextProvider = (props) => {
-    const [user, userDispatch] = useReducer(userReducer, {})
+export const UserContextProvider = (props,) => {
+    const [user, userDispatch,] = useReducer(userReducer, {},)
     return (
-        <userContext.Provider value={[user, userDispatch]}>{props.children}</userContext.Provider>
+        <userContext.Provider value={[user, userDispatch,]}>{props.children}</userContext.Provider>
     )
 }
 

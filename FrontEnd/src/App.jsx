@@ -9,29 +9,38 @@ import Stack from 'react-bootstrap/Stack'
 
 const App = () => {
     const [blogs, setBlogs,] = useState([],)
-    const [user, setUser,] = useState({},)
+    const [user, setUser,] = useState(() => {
+        try {
+            const savedUser = window.localStorage.getItem('user',)
+            return savedUser ? JSON.parse(savedUser,) : {}
+        } catch (error) {
+            console.error('Error parsing user from local storage:', error,)
+            return {} // Return default state on error
+        }
+    },)
     const [message, setMessage,] = useState(null,)
     const [error, setError,] = useState(null,)
 
     useEffect(() => {
+        let isMounted = true
         BlogService.getAll().then(blogs =>
-            setBlogs(blogs,),
+            isMounted ? setBlogs(blogs,) : null,
         )
+        return () => isMounted = false
     }, [],)
 
     useEffect(() => {
-        const savedUser = JSON.parse(window.localStorage.getItem('user',),) || {}
-        if (savedUser.name) setUser(savedUser,)
-    }, [],)
-
-    useEffect(() => {
+        let isMounted = true
         setTimeout(() => {
-            setMessage(null,)
-            setError(null,)
+            if (isMounted) {
+                setMessage(null,)
+                setError(null,)
+            }
         }, 5000,)
+        return () => isMounted = false
     }, [message, error,],)
 
-    const createHandler = (title, author, url,) => {
+    const createHandler = async (title, author, url,) => {
         return BlogService
             .createBlog({ title, author, url, }, user,)
             .then((createdBlog,) => {

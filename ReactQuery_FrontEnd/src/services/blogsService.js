@@ -2,84 +2,84 @@ import axios from 'axios'
 const baseUrl = '/api/blogs'
 
 const getAll = async () => {
-    return axios.get(baseUrl).then((response) => response.data)
+    return axios.get(baseUrl,).then((response,) => response.data,)
 }
 
-const createBlog = async ({ blog, user }) => {
+const createBlog = async ({ blog, user, },) => {
     return axios
         .post(baseUrl, blog, {
-            headers: { Authorization: `Bearer ${user.token}` }
-        })
-        .then((response) => {
+            headers: { Authorization: `Bearer ${user.token}`, },
+        },)
+        .then((response,) => {
             return response.data
-        })
-        .catch((err) => {
-            console.error(err)
-            return Promise.reject('Unable to create blog')
-        })
+        },)
+        .catch((err,) => {
+            console.error(err,)
+            return Promise.reject('Unable to create blog',)
+        },)
 }
 
-const giveLike = async ({ blog, user }) => {
+const giveLike = async ({ blog, user, },) => {
     const config = {
         method: 'put',
         url: `${baseUrl}/${blog.id}`,
         headers: {
-            Authorization: `Bearer ${user.token}`
+            Authorization: `Bearer ${user.token}`,
         },
         data: {
-            likes: 1
-        }
+            likes: 1,
+        },
     }
     return axios
-        .request(config)
-        .then((response) => {
+        .request(config,)
+        .then((response,) => {
             return response.data
-        })
-        .catch((err) => {
-            console.error(err)
-            return Promise.reject('Unable to give like')
-        })
+        },)
+        .catch((err,) => {
+            console.error(err,)
+            return Promise.reject('Unable to give like',)
+        },)
 }
 
-const deleteBlog = async ({ blog, user }) => {
+const deleteBlog = async ({ blog, user, },) => {
     const config = {
         method: 'delete',
         url: `${baseUrl}/${blog.id}`,
         headers: {
-            Authorization: `Bearer ${user.token}`
-        }
+            Authorization: `Bearer ${user.token}`,
+        },
     }
     return axios
-        .request(config)
-        .then((response) => {
+        .request(config,)
+        .then((_response,) => {
             return blog
-        })
-        .catch((err) => {
-            console.error(err)
+        },)
+        .catch((err,) => {
+            console.error(err,)
             return blog
-        })
+        },)
 }
 
-const commentBlog = async ({ blog, user, comment }) => {
+const commentBlog = async ({ blog, user, comment, },) => {
     const config = {
         method: 'post',
         url: `${baseUrl}/${blog.id}/comments`,
         headers: {
-            Authorization: `Bearer ${user.token}`
+            Authorization: `Bearer ${user.token}`,
         },
         data: {
-            comment
-        }
+            comment,
+        },
     }
     return axios
-        .request(config)
-        .then((response) => {
+        .request(config,)
+        .then((response,) => {
             return response.data
-        })
-        .catch((err) => {
-            console.error(err)
-            return Promise.reject('Unable to comment')
-        })
+        },)
+        .catch((err,) => {
+            console.error(err,)
+            return Promise.reject('Unable to comment',)
+        },)
 }
 
-export default { getAll, createBlog, giveLike, deleteBlog, commentBlog }
+export default { getAll, createBlog, giveLike, deleteBlog, commentBlog, }
