@@ -1,15 +1,15 @@
-import { setNotification, clearNotification, } from '../context/notifications'
+import { setNotification, clearNotification, } from '../contexts/notification'
 import { useContext, } from 'react'
 import { useQueryClient, useMutation, } from '@tanstack/react-query'
 import BlogsService from '../services/blogsService'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/esm/InputGroup'
-import notificationContext from '../context/notifications'
+import notificationContext from '../contexts/notification'
 import Stack from 'react-bootstrap/esm/Stack'
 import Table from 'react-bootstrap/Table'
 import useInput from '../hooks/useInput'
-import userContext from '../context/user'
+import userContext from '../contexts/user'
 
 const Blog = ({ blog, },) => {
     const [notification, notificationDispatch,] = useContext(notificationContext,)

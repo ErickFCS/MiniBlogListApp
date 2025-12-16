@@ -19,36 +19,39 @@ jobs:
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
 
       - name: Installing dependencies
-        run: npm ci
+        run: pnpm i --frozen-lockfile
       - name: Running linting
-        run: npm run lint
+        run: pnpm lint
       - name: Running unit tests
         env:
             TEST_URI: ${{ secrets.TEST_URI }}
-        run: npm run unitTest
+        run: pnpm unitTest
 
       - name: Installing frontend dependencies
-        run: npm ci
+        run: pnpm i --frozen-lockfile
         working-directory: ./Redux_FrontEnd
       - name: Running frontend linting
-        run: npm run lint
+        run: pnpm lint
         working-directory: ./Redux_FrontEnd
       - name: Running frontend unit tests
         env:
           TEST_URI: ${{ secrets.TEST_URI }}
-        run: npm run test
+        run: pnpm test
         working-directory: ./Redux_FrontEnd
       - name: Building frontend
-        run: npm run build
+        run: pnpm build
         working-directory: ./Redux_FrontEnd
 
       - name: Installing E2E dependencies
-        run: npm ci
+        run: pnpm i --frozen-lockfile
         working-directory: ./E2E
       - name: Installing E2E browsers
         run: npx playwright install chromium --with-deps
@@ -56,7 +59,7 @@ jobs:
       - name: Running E2E tests
         env:
           TEST_URI: ${{ secrets.TEST_URI }}
-        run: npm run test
+        run: pnpm test
         working-directory: ./E2E
         
       - name: Deploy to render

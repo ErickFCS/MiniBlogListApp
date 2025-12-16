@@ -1,6 +1,6 @@
 import { useNavigate, } from 'react-router-dom'
-import { setNotification, clearNotification, } from '../context/notifications'
-import { setUser, clearUser, } from '../context/user'
+import { setNotification, clearNotification, } from '../contexts/notification'
+import { setUser, clearUser, } from '../contexts/user'
 import { useContext, } from 'react'
 import AccountService from '../services/accountService'
 import Button from 'react-bootstrap/Button'
@@ -8,11 +8,11 @@ import Card from 'react-bootstrap/Card'
 import InputGroup from 'react-bootstrap/InputGroup'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
-import notificationContext from '../context/notifications'
+import notificationContext from '../contexts/notification'
 import Stack from 'react-bootstrap/Stack'
 import Form from 'react-bootstrap/Form'
 import useInput from '../hooks/useInput'
-import userContext from '../context/user'
+import userContext from '../contexts/user'
 
 
 const AccountForm = () => {
