@@ -32,7 +32,7 @@ jobs:
         run: pnpm lint
       - name: Running unit tests
         env:
-          TEST_URI: ${{ secrets.TEST_URI }}
+          TEST_URI: ${{ secrets.URI_TEST_BACKEND }}
         run: pnpm unitTest
 
   vanilla_pipeline:
@@ -62,15 +62,6 @@ jobs:
       - name: Building frontend
         run: pnpm build
         working-directory: ./FrontEnd
-
-      - name: Installing E2E browsers
-        run: pnpx playwright install chromium --with-deps
-        working-directory: ./E2E
-      - name: Running E2E tests
-        env:
-          TEST_URI: ${{ secrets.TEST_URI }}
-        run: pnpm test
-        working-directory: ./E2E
 
       - name: Deploy to render
         if: ${{ github.event_name == 'push' }}
@@ -109,7 +100,7 @@ jobs:
         working-directory: ./E2E
       - name: Running E2E tests
         env:
-          TEST_URI: ${{ secrets.TEST_URI }}
+          TEST_URI: ${{ secrets.URI_TEST_REDUX }}
         run: pnpm test
         working-directory: ./E2E
 
@@ -150,7 +141,7 @@ jobs:
         working-directory: ./E2E
       - name: Running E2E tests
         env:
-          TEST_URI: ${{ secrets.TEST_URI }}
+          TEST_URI: ${{ secrets.URI_TEST_QUERY }}
         run: pnpm test
         working-directory: ./E2E
 
