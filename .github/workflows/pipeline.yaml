@@ -1,18 +1,18 @@
-name: 'pipeline'
+name: "pipeline"
 
 on:
   push:
     branches:
-      - 'main'
+      - "main"
   pull_request:
     branches:
-      - 'main'
+      - "main"
     types:
-      - 'opened'
-      - 'synchronize'
+      - "opened"
+      - "synchronize"
 
 jobs:
-  deployment_pipeline:
+  backend_pipeline:
     runs-on: ubuntu-24.04
     env:
       PORT: 3000
@@ -24,94 +24,145 @@ jobs:
           version: 10
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
-
+          node-version: "22"
       - name: Installing dependencies
-        run: pnpm i --frozen-lockfile
+        run: pnpm i --recursive --frozen-lockfile
+
       - name: Running linting
         run: pnpm lint
       - name: Running unit tests
         env:
-            TEST_URI: ${{ secrets.TEST_URI }}
+          TEST_URI: ${{ secrets.TEST_URI }}
         run: pnpm unitTest
 
-      - name: Installing frontend dependencies
-        run: pnpm i --frozen-lockfile
-        working-directory: ./Redux_FrontEnd
+  vanilla_pipeline:
+    needs:
+      - backend_pipeline
+    runs-on: ubuntu-24.04
+    env:
+      PORT: 3000
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Installing dependencies
+        run: pnpm i --recursive --frozen-lockfile
+
       - name: Running frontend linting
         run: pnpm lint
-        working-directory: ./Redux_FrontEnd
+        working-directory: ./FrontEnd
       - name: Running frontend unit tests
-        env:
-          TEST_URI: ${{ secrets.TEST_URI }}
         run: pnpm test
-        working-directory: ./Redux_FrontEnd
+        working-directory: ./FrontEnd
       - name: Building frontend
         run: pnpm build
-        working-directory: ./Redux_FrontEnd
+        working-directory: ./FrontEnd
 
-      - name: Installing E2E dependencies
-        run: pnpm i --frozen-lockfile
-        working-directory: ./E2E
       - name: Installing E2E browsers
-        run: npx playwright install chromium --with-deps
+        run: pnpx playwright install chromium --with-deps
         working-directory: ./E2E
       - name: Running E2E tests
         env:
           TEST_URI: ${{ secrets.TEST_URI }}
         run: pnpm test
         working-directory: ./E2E
-        
+
       - name: Deploy to render
         if: ${{ github.event_name == 'push' }}
-        run: curl https://api.render.com/deploy/srv-${{secrets.RENDER_SERVICE_ID}}?key=${{secrets.RENDER_API_KEY}}
-        
-      - name: Send success notification
-        if: ${{ success() && github.event_name == 'push' }}
-        uses: stegzilla/discord-notify@v2
+        run: curl https://api.render.com/deploy/srv-${{secrets.RENDER_VANILLA_SERVICE_ID}}?key=${{secrets.RENDER_API_KEY}}
+
+  redux_pipeline:
+    needs:
+      - backend_pipeline
+    runs-on: ubuntu-24.04
+    env:
+      PORT: 3000
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
         with:
-          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          title: New build deployed
-          message: |
-            **Event:** ${{ github.event_name }}
-            **Repo:** ${{ github.event.repository.full_name }}
-            **Ref:** ${{ github.event.ref }}
-            **Workflow:** ${{ github.workflow }}
-            **Author:** ${{ github.event.head_commit.author.name }}
-            **Committer:** ${{ github.event.head_commit.committer.name }}
-            **Pusher:** ${{ github.event.pusher.name }}
-            **Pusher Date:** ${{ github.event.pusher.date }}
-            **Commit URL:** ${{ github.event.head_commit.url }}
-            **Commit Message:** ${{ github.event.head_commit.message }}
-          include_image: true
-          avatar_url: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/9c870380-219a-4060-914d-9929082d5056/dfghzab-31509847-d454-4602-ac9b-0b1ad48ba9b7.png/v1/fill/w_600,h_600,q_80,strp/build_chan_by_lupinmk_dfghzab-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjAwIiwicGF0aCI6IlwvZlwvOWM4NzAzODAtMjE5YS00MDYwLTkxNGQtOTkyOTA4MmQ1MDU2XC9kZmdoemFiLTMxNTA5ODQ3LWQ0NTQtNDYwMi1hYzliLTBiMWFkNDhiYTliNy5wbmciLCJ3aWR0aCI6Ijw9NjAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.PsmFPEaVbfDMhXGlNbGe7Jmku2lwgnw2blRzAxsKL-U"
-          username: BuildNotifier-chan
-          colour: "#32E638"
-      - name: Send failure notification
-        if: ${{ failure() && github.event_name == 'push' }}
-        uses: stegzilla/discord-notify@v2
+          version: 10
+      - uses: actions/setup-node@v4
         with:
-          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          title: New build failed
-          message: |
-            **Event:** ${{ github.event_name }}
-            **Repo:** ${{ github.event.repository.full_name }}
-            **Ref:** ${{ github.event.ref }}
-            **Workflow:** ${{ github.workflow }}
-            **Author:** ${{ github.event.head_commit.author.name }}
-            **Committer:** ${{ github.event.head_commit.committer.name }}
-            **Pusher:** ${{ github.event.pusher.name }}
-            **Pusher Date:** ${{ github.event.pusher.date }}
-            **Commit URL:** ${{ github.event.head_commit.url }}
-            **Commit Message:** ${{ github.event.head_commit.message }}
-          include_image: true
-          avatar_url: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/9c870380-219a-4060-914d-9929082d5056/dfghzab-31509847-d454-4602-ac9b-0b1ad48ba9b7.png/v1/fill/w_600,h_600,q_80,strp/build_chan_by_lupinmk_dfghzab-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjAwIiwicGF0aCI6IlwvZlwvOWM4NzAzODAtMjE5YS00MDYwLTkxNGQtOTkyOTA4MmQ1MDU2XC9kZmdoemFiLTMxNTA5ODQ3LWQ0NTQtNDYwMi1hYzliLTBiMWFkNDhiYTliNy5wbmciLCJ3aWR0aCI6Ijw9NjAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.PsmFPEaVbfDMhXGlNbGe7Jmku2lwgnw2blRzAxsKL-U"
-          username: BuildNotifier-chan
-          colour: "#F02E23"
+          node-version: "22"
+      - name: Installing dependencies
+        run: pnpm i --recursive --frozen-lockfile
+
+      - name: Running frontend linting
+        run: pnpm lint
+        working-directory: ./Redux_FrontEnd
+      - name: Running frontend unit tests
+        run: pnpm test
+        working-directory: ./Redux_FrontEnd
+      - name: Building frontend
+        run: pnpm build
+        working-directory: ./Redux_FrontEnd
+
+      - name: Installing E2E browsers
+        run: pnpx playwright install chromium --with-deps
+        working-directory: ./E2E
+      - name: Running E2E tests
+        env:
+          TEST_URI: ${{ secrets.TEST_URI }}
+        run: pnpm test
+        working-directory: ./E2E
+
+      - name: Deploy to render
+        if: ${{ github.event_name == 'push' }}
+        run: curl https://api.render.com/deploy/srv-${{secrets.RENDER_REDUX_SERVICE_ID}}?key=${{secrets.RENDER_API_KEY}}
+
+  query_pipeline:
+    needs:
+      - backend_pipeline
+    runs-on: ubuntu-24.04
+    env:
+      PORT: 3000
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Installing dependencies
+        run: pnpm i --recursive --frozen-lockfile
+
+      - name: Running frontend linting
+        run: pnpm lint
+        working-directory: ./ReactQuery_FrontEnd
+      - name: Running frontend unit tests
+        run: pnpm test
+        working-directory: ./ReactQuery_FrontEnd
+      - name: Building frontend
+        run: pnpm build
+        working-directory: ./ReactQuery_FrontEnd
+
+      - name: Installing E2E browsers
+        run: pnpx playwright install chromium --with-deps
+        working-directory: ./E2E
+      - name: Running E2E tests
+        env:
+          TEST_URI: ${{ secrets.TEST_URI }}
+        run: pnpm test
+        working-directory: ./E2E
+
+      - name: Deploy to render
+        if: ${{ github.event_name == 'push' }}
+        run: curl https://api.render.com/deploy/srv-${{secrets.RENDER_QUERY_SERVICE_ID}}?key=${{secrets.RENDER_API_KEY}}
 
   tag_release:
     needs:
-      - deployment_pipeline
+      - vanilla_pipeline
+      - redux_pipeline
+      - query_pipeline
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -121,3 +172,101 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
+
+
+#  deployment_pipeline:
+#    runs-on: ubuntu-24.04
+#    env:
+#      PORT: 3000
+#      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: pnpm/action-setup@v4
+#        with:
+#          version: 10
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: "22"
+#
+#      - name: Installing dependencies
+#        run: pnpm i --frozen-lockfile
+#      - name: Running linting
+#        run: pnpm lint
+#      - name: Running unit tests
+#        env:
+#          TEST_URI: ${{ secrets.TEST_URI }}
+#        run: pnpm unitTest
+#
+#      - name: Installing frontend dependencies
+#        run: pnpm i --frozen-lockfile
+#        working-directory: ./Redux_FrontEnd
+#      - name: Running frontend linting
+#        run: pnpm lint
+#        working-directory: ./Redux_FrontEnd
+#      - name: Running frontend unit tests
+#        env:
+#          test_uri: ${{ secrets.test_uri }}
+#        run: pnpm test
+#        working-directory: ./Redux_FrontEnd
+#      - name: Building frontend
+#        run: pnpm build
+#        working-directory: ./Redux_FrontEnd
+#
+#      - name: Installing E2E dependencies
+#        run: pnpm i --frozen-lockfile
+#        working-directory: ./E2E
+#      - name: Installing E2E browsers
+#        run: pnpx playwright install chromium --with-deps
+#        working-directory: ./E2E
+#      - name: Running E2E tests
+#        env:
+#          TEST_URI: ${{ secrets.TEST_URI }}
+#        run: pnpm test
+#        working-directory: ./E2E
+#
+#      - name: Deploy to render
+#        if: ${{ github.event_name == 'push' }}
+#        run: curl https://api.render.com/deploy/srv-${{secrets.RENDER_SERVICE_ID}}?key=${{secrets.RENDER_API_KEY}}
+#
+#      - name: Send success notification
+#        if: ${{ success() && github.event_name == 'push' }}
+#        uses: stegzilla/discord-notify@v2
+#        with:
+#          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+#          title: New build deployed
+#          message: |
+#            **Event:** ${{ github.event_name }}
+#            **Repo:** ${{ github.event.repository.full_name }}
+#            **Ref:** ${{ github.event.ref }}
+#            **Workflow:** ${{ github.workflow }}
+#            **Author:** ${{ github.event.head_commit.author.name }}
+#            **Committer:** ${{ github.event.head_commit.committer.name }}
+#            **Pusher:** ${{ github.event.pusher.name }}
+#            **Pusher Date:** ${{ github.event.pusher.date }}
+#            **Commit URL:** ${{ github.event.head_commit.url }}
+#            **Commit Message:** ${{ github.event.head_commit.message }}
+#          include_image: true
+#          avatar_url: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/9c870380-219a-4060-914d-9929082d5056/dfghzab-31509847-d454-4602-ac9b-0b1ad48ba9b7.png/v1/fill/w_600,h_600,q_80,strp/build_chan_by_lupinmk_dfghzab-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjAwIiwicGF0aCI6IlwvZlwvOWM4NzAzODAtMjE5YS00MDYwLTkxNGQtOTkyOTA4MmQ1MDU2XC9kZmdoemFiLTMxNTA5ODQ3LWQ0NTQtNDYwMi1hYzliLTBiMWFkNDhiYTliNy5wbmciLCJ3aWR0aCI6Ijw9NjAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.PsmFPEaVbfDMhXGlNbGe7Jmku2lwgnw2blRzAxsKL-U"
+#          username: BuildNotifier-chan
+#          colour: "#32E638"
+#      - name: Send failure notification
+#        if: ${{ failure() && github.event_name == 'push' }}
+#        uses: stegzilla/discord-notify@v2
+#        with:
+#          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+#          title: New build failed
+#          message: |
+#            **Event:** ${{ github.event_name }}
+#            **Repo:** ${{ github.event.repository.full_name }}
+#            **Ref:** ${{ github.event.ref }}
+#            **Workflow:** ${{ github.workflow }}
+#            **Author:** ${{ github.event.head_commit.author.name }}
+#            **Committer:** ${{ github.event.head_commit.committer.name }}
+#            **Pusher:** ${{ github.event.pusher.name }}
+#            **Pusher Date:** ${{ github.event.pusher.date }}
+#            **Commit URL:** ${{ github.event.head_commit.url }}
+#            **Commit Message:** ${{ github.event.head_commit.message }}
+#          include_image: true
+#          avatar_url: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/9c870380-219a-4060-914d-9929082d5056/dfghzab-31509847-d454-4602-ac9b-0b1ad48ba9b7.png/v1/fill/w_600,h_600,q_80,strp/build_chan_by_lupinmk_dfghzab-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjAwIiwicGF0aCI6IlwvZlwvOWM4NzAzODAtMjE5YS00MDYwLTkxNGQtOTkyOTA4MmQ1MDU2XC9kZmdoemFiLTMxNTA5ODQ3LWQ0NTQtNDYwMi1hYzliLTBiMWFkNDhiYTliNy5wbmciLCJ3aWR0aCI6Ijw9NjAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.PsmFPEaVbfDMhXGlNbGe7Jmku2lwgnw2blRzAxsKL-U"
+#          username: BuildNotifier-chan
+#          colour: "#F02E23"
