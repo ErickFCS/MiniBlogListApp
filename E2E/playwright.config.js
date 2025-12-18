@@ -69,7 +69,7 @@ module.exports = defineConfig({
 
     /* Run your local dev server before starting the tests */
     webServer: {
-        command: process.env.NODE_ENV === 'dev' ? 'cd .. && pnpm run test' : 'cd .. && npm run test',
+        command: process.env.NODE_ENV === 'dev' ? 'cd .. && pnpm test' : 'cd .. && npm test',
         url: `http://localhost:${process.env.PORT}`
         // reuseExistingServer: !process.env.CI,
     }

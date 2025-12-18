@@ -14,6 +14,12 @@ This project is a mini web application built with React, Vite, and Bootstrap. It
 - Rate system
 - Responsive design using Bootstrap.
 
+## Lives
+
+- [Vanilla FrontEnd](https://minibloglistappvanilla.onrender.com "Just with states")
+- [  Redux FrontEnd](https://minibloglistapp.onrender.com "Using reduxjs/toolkit")
+- [  Query FrontEnd](https://minibloglistappquery.onrender.com "Using the react query lib and some contexts")
+
 ## Getting Started
 
 ### Prerequisites
@@ -24,11 +30,11 @@ This project is a mini web application built with React, Vite, and Bootstrap. It
 
 ### Fast Setup
 
-- En Unix based
+- In Unix based
     ```bash
     ./run.sh
 
-- En windows
+- In windows
 
     ```bash
     run.bat
