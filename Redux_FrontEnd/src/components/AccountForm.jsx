@@ -15,9 +15,9 @@ import useInput from '../hooks/useInput'
 const AccountForm = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const password = useInput('password',)
+    const password = useInput('password', 'password',)
     const user = useSelector((state,) => state.user,)
-    const username = useInput('text',)
+    const username = useInput('text', 'admin',)
 
     const loginHandler = (event,) => {
         event.preventDefault()

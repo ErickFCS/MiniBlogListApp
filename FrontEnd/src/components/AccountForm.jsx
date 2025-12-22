@@ -10,8 +10,8 @@ import Stack from 'react-bootstrap/Stack'
 
 
 const AccountForm = ({ user, setUser, setError, setMessage, },) => {
-    const [username, setUsername,] = useState('',)
-    const [password, setPassword,] = useState('',)
+    const [username, setUsername,] = useState('admin',)
+    const [password, setPassword,] = useState('password',)
 
     const loginHandler = (event,) => {
         event.preventDefault()
@@ -47,13 +47,13 @@ const AccountForm = ({ user, setUser, setError, setMessage, },) => {
                             <Form.Group>
                                 <InputGroup>
                                     <InputGroup.Text>Username:</InputGroup.Text>
-                                    <Form.Control onChange={({ target, },) => { setUsername(target.value,) }} name='username' placeholder='username' type='text' />
+                                    <Form.Control value={username} onChange={({ target, },) => { setUsername(target.value,) }} name='username' placeholder='username' type='text' />
                                 </InputGroup>
                             </Form.Group>
                             <Form.Group>
                                 <InputGroup>
                                     <InputGroup.Text>Password:</InputGroup.Text>
-                                    <Form.Control onChange={({ target, },) => { setPassword(target.value,) }} name='password' placeholder='password' type='password' />
+                                    <Form.Control value={password} onChange={({ target, },) => { setPassword(target.value,) }} name='password' placeholder='password' type='password' />
                                 </InputGroup>
                             </Form.Group>
                             <Button variant='success' type='submit'>login</Button>
