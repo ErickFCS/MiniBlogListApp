@@ -19,8 +19,8 @@ const AccountForm = () => {
     const [notification, notificationDispatch,] = useContext(notificationContext,)
     const [user, userDispatch,] = useContext(userContext,)
     const navigate = useNavigate()
-    const password = useInput('password',)
-    const username = useInput('text',)
+    const password = useInput('password', 'password',)
+    const username = useInput('text', 'admin',)
 
     const loginHandler = (event,) => {
         event.preventDefault()

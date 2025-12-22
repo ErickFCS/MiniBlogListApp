@@ -16,6 +16,9 @@ This project is a mini web application built with React, Vite, and Bootstrap. It
 
 ## Lives
 
+- The base user is: admin
+- The base password is: password
+
 - [Vanilla FrontEnd](https://minibloglistappvanilla.onrender.com "Just with states")
 - [  Redux FrontEnd](https://minibloglistapp.onrender.com "Using reduxjs/toolkit")
 - [  Query FrontEnd](https://minibloglistappquery.onrender.com "Using the react query lib and some contexts")
