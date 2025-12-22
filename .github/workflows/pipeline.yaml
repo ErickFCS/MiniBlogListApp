@@ -65,7 +65,7 @@ jobs:
 
       - name: Deploy to render
         if: ${{ github.event_name == 'push' }}
-        run: curl https://api.render.com/deploy/srv-${{secrets.RENDER_VANILLA_SERVICE_ID}}?key=${{secrets.RENDER_API_KEY}}
+        run: curl https://api.render.com/deploy/srv-${{secrets.RENDER_VANILLA_SERVICE_ID}}?key=${{secrets.RENDER_VANILLA_API_KEY}}
 
   redux_pipeline:
     needs:
@@ -106,7 +106,7 @@ jobs:
 
       - name: Deploy to render
         if: ${{ github.event_name == 'push' }}
-        run: curl https://api.render.com/deploy/srv-${{secrets.RENDER_REDUX_SERVICE_ID}}?key=${{secrets.RENDER_API_KEY}}
+        run: curl https://api.render.com/deploy/srv-${{secrets.RENDER_REDUX_SERVICE_ID}}?key=${{secrets.RENDER_REDUX_API_KEY}}
 
   query_pipeline:
     needs:
@@ -147,7 +147,7 @@ jobs:
 
       - name: Deploy to render
         if: ${{ github.event_name == 'push' }}
-        run: curl https://api.render.com/deploy/srv-${{secrets.RENDER_QUERY_SERVICE_ID}}?key=${{secrets.RENDER_API_KEY}}
+        run: curl https://api.render.com/deploy/srv-${{secrets.RENDER_QUERY_SERVICE_ID}}?key=${{secrets.RENDER_QUERY_API_KEY}}
 
   tag_release:
     needs:
