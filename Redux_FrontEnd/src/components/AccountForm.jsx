@@ -71,9 +71,9 @@ const AccountForm = () => {
         )
     else
         return (
-            <Navbar>
+            <Navbar style={{ justifyContent: 'center', flexWrap:'wrap', }}>
                 <Navbar.Brand>Mini Blog List App</Navbar.Brand>
-                <Nav variant='underline' onSelect={(eventKey,) => { navigate(eventKey,) }} defaultActiveKey='/'>
+                <Nav className='me-e me-sm-auto' variant='underline' onSelect={(eventKey,) => { navigate(eventKey,) }} defaultActiveKey='/'>
                     <Nav.Item>
                         <Nav.Link eventKey='/' as='div'>
                             Blogs
@@ -85,7 +85,7 @@ const AccountForm = () => {
                         </Nav.Link>
                     </Nav.Item>
                 </Nav>
-                <Stack direction='horizontal' gap={2} style={{ flexGrow: 1, justifyContent: 'end', }}>
+                <Stack direction='horizontal' gap={2} style={{ justifyContent: 'end', }}>
                     <Navbar.Text>
                         {user.username} is logged in
                     </Navbar.Text>

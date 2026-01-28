@@ -128,7 +128,7 @@ const Blog = ({ blog, },) => {
         <>
             <Stack direction='horizontal'>
                 <h2 style={{ margin: 0, flexGrow: 1, }}>{blog.title}</h2>
-                {user.id === blog.User.id &&
+                {user.id === blog.User?.id &&
                     <Button variant='danger' onClick={() => { removeHandler(blog,) }}>Delete</Button>
                 }
             </Stack>
@@ -146,7 +146,7 @@ const Blog = ({ blog, },) => {
                     </tr>
                     <tr>
                         <td>Url:</td>
-                        <td>{blog.url}</td>
+                        <td className='text-break'>{blog.url}</td>
                     </tr>
                     <tr>
                         <td>

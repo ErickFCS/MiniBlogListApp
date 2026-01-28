@@ -64,9 +64,9 @@ const AccountForm = ({ user, setUser, setError, setMessage, },) => {
         </Card>
     )
     else return (
-        <Navbar>
-            <Navbar.Brand>Mini Blog List App</Navbar.Brand>
-            <Stack direction='horizontal' gap={2} style={{ flexGrow: 1, justifyContent: 'end', }}>
+        <Navbar style={{ justifyContent: 'center', flexWrap: 'wrap', }}>
+            <Navbar.Brand className='ms-3 me-3 me-sm-auto' >Mini Blog List App</Navbar.Brand>
+            <Stack direction='horizontal' gap={2} style={{ justifyContent: 'center', }}>
                 <Navbar.Text>
                     {user.username} is logged in
                 </Navbar.Text>
