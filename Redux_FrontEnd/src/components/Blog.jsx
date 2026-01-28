@@ -64,7 +64,7 @@ const Blog = ({ blog, },) => {
                     </tr>
                     <tr>
                         <td>Url:</td>
-                        <td>{blog.url}</td>
+                        <td className='text-break'>{blog.url}</td>
                     </tr>
                     <tr>
                         <td>

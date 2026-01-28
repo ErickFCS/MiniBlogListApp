@@ -16,8 +16,9 @@ const Blog = ({ blog, likesHandler, removeHandler, user, },) => {
     return (
         <Card>
             <Card.Body>
-                <Card.Title>
-                    {blog.title}<Button onClick={toggleVisibility}>{buttonText}</Button>
+                <Card.Title style={{ display: 'flex', alignItems: 'center', }}>
+                    <span className='me-auto'>{blog.title}</span>
+                    <Button onClick={toggleVisibility}>{buttonText}</Button>
                 </Card.Title>
                 <Table>
                     <thead>
@@ -33,7 +34,7 @@ const Blog = ({ blog, likesHandler, removeHandler, user, },) => {
                         </tr>
                         <tr style={visibleWhenVisible}>
                             <td>Url:</td>
-                            <td>{blog.url}</td>
+                            <td className='text-break'>{blog.url}</td>
                         </tr>
                         <tr style={visibleWhenVisible}>
                             <td>Total likes:</td>
@@ -46,7 +47,7 @@ const Blog = ({ blog, likesHandler, removeHandler, user, },) => {
                         </tr>
                     </tbody>
                 </Table>
-                {user.id === blog.User.id &&
+                {user.id === blog.User?.id &&
                     <Stack style={{ alignItems: 'end', ...visibleWhenVisible, }}>
                         <Button variant='danger' onClick={() => { removeHandler(blog,) }}>Delete</Button>
                     </Stack>
