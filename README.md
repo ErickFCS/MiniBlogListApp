@@ -1,5 +1,9 @@
 # Mini Blog List App
 
+<p align="center">
+  <img src="/overview.png" alt="Awesome Image" width="600">
+</p>
+
 This project is a mini web application built with React, Vite, and Bootstrap. It allows users share and rate blogs.
 
 ## Technologies Used
@@ -19,7 +23,16 @@ This project is a mini web application built with React, Vite, and Bootstrap. It
 - The base user is: admin
 - The base password is: password
 
+<p align="center">
+  <img src="/overviewLogin.png" alt="Awesome Image" width="600">
+</p>
+
 - [Vanilla FrontEnd](https://minibloglistappvanilla.onrender.com "Just with states")
+
+<p align="center">
+  <img src="/overview_v.png" alt="Awesome Image" width="600">
+</p>
+
 - [  Redux FrontEnd](https://minibloglistapp.onrender.com "Using reduxjs/toolkit")
 - [  Query FrontEnd](https://minibloglistappquery.onrender.com "Using the react query lib and some contexts")
 
